@@ -1,0 +1,16 @@
+node1 ansible_host=0.0.0.0 ansible_user=node1
+node2 ansible_host=0.0.0.0 ansible_user=node2
+
+
+[local]
+127.0.0.1 ansible_connection=local
+
+[node]
+node1
+node2
+
+[node:vars]
+folder=max
+
+[all:vars]
+ansible_private_key_file=./key

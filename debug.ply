@@ -1,0 +1,7 @@
+---
+- name: test
+  hosts: node1
+  tasks:
+   - name: check name
+     debug: 
+      var: ansible_ssh_user

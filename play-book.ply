@@ -1,0 +1,31 @@
+---
+- name: Install docker
+  hosts: local
+  tasks:
+  - name: Install Basic package
+    apt: 
+     name: ['apt-transport-https', 'ca-certificates', 'wget', 'software-properties-common']
+     update_cache: yes
+
+  - name: Add key 
+    apt_key: 
+     url: https://download.docker.com/linux/debian/gpg
+    
+  - name: Add repo link to the system repo 
+    shell: echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee -a /etc/apt/sources.list.d/docker.list
+
+  - name: Install docker
+    apt: 
+     name: docker-ce
+     update_cache: yes
+
+  - name: Start docker
+    service: 
+     name: docker
+     state: started
+
+  - name: Add user 
+    user:
+     name: '{{ ansible_ssh_user }}'
+     groups: docker
+     append: yes
